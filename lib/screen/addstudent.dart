@@ -1,22 +1,18 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sqflite_10/controller/db_functions.dart';
-import 'package:sqflite_10/model/db_model.dart';
+import 'package:provider/provider.dart';
+import 'package:sqflite_10/controller/controller.dart';
+import 'package:sqflite_10/model/model_db.dart';
+import 'package:sqflite_10/screen/home_screen/list_view/list_view.dart';
 
 
-class AddStudent extends StatefulWidget {
-  const AddStudent({super.key});
+class AddStudent extends StatelessWidget {
+   AddStudent({super.key});
 
-  @override
-  State<AddStudent> createState() => _AddStudentState();
-}
-
-class _AddStudentState extends State<AddStudent> {
   File? image25;
   String? imagepath;
-  final _formKey = GlobalKey<FormState>(); // Add a form key for the validation
+  final _formKey = GlobalKey<FormState>(); 
 
   final _nameController = TextEditingController();
   final _classController = TextEditingController();
@@ -25,17 +21,22 @@ class _AddStudentState extends State<AddStudent> {
 
   @override
   Widget build(BuildContext context) {
+
+      final databaseProvider = Provider.of<DatabaseProvider>(context);
+ 
+
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Student'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              addstudentclicked(context);
-            },
-            icon: const Icon(Icons.save_rounded),
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       addstudentclicked(context);
+        //     },
+        //     icon: const Icon(Icons.save_rounded),
+        //   )
+        // ],
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -63,7 +64,7 @@ class _AddStudentState extends State<AddStudent> {
                           addphoto(context);
                         },
                         icon: const Icon(Icons.add_a_photo_outlined),
-                        color: Color.fromARGB(255, 255, 255, 255),
+                        color: const Color.fromARGB(255, 255, 255, 255),
                         iconSize: 40,
                       ),
                     ),
@@ -152,6 +153,26 @@ class _AddStudentState extends State<AddStudent> {
                     return null;
                   },
                 ),
+
+                const SizedBox(height: 20),
+
+                ElevatedButton(
+                  onPressed: () {
+                    addstudentclicked(context, databaseProvider);
+                  
+                  },
+                  style: ElevatedButton.styleFrom(
+                   
+                   backgroundColor: Colors.white
+                   ,
+                   elevation: 2,
+                   fixedSize: Size(200, 50)
+                  ),
+                  child: Text(
+                    'Add Student',
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                  ),
+                )
               ],
             ),
           ),
@@ -160,7 +181,7 @@ class _AddStudentState extends State<AddStudent> {
     );
   }
 
-  Future<void> addstudentclicked(mtx) async {
+  Future<void> addstudentclicked(BuildContext context , DatabaseProvider databaseProvider) async {
     if (_formKey.currentState!.validate() && image25 != null) {
       final name = _nameController.text.toUpperCase();
       final classA = _classController.text.toString().trim();
@@ -174,27 +195,25 @@ class _AddStudentState extends State<AddStudent> {
         pnumber: phonenumber,
         imagex: imagepath!,
       );
-      await addstudent(stdData); 
+      await databaseProvider.addStudent(stdData);
+      
+      Navigator.pop(context);
 
-      ScaffoldMessenger.of(mtx).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Successfully added"),
           behavior: SnackBarBehavior.floating,
           margin: EdgeInsets.all(10),
-          backgroundColor: Colors.greenAccent,
+          backgroundColor: Color.fromARGB(255, 102, 223, 164),
           duration: Duration(seconds: 2),
         ),
       );
 
-      setState(() {
-        image25 = null;
-        _nameController.clear();
-        _classController.clear();
-        _guardianController.clear();
-        _mobileController.clear();
-      });
+      
+
+
     } else {
-      ScaffoldMessenger.of(mtx).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Add Profile Picture '),
           duration: Duration(seconds: 2),
@@ -211,16 +230,19 @@ class _AddStudentState extends State<AddStudent> {
     if (image == null) {
       return;
     }
-    setState(() {
-      image25 = File(image.path);
+
+         image25 = File(image.path);
       imagepath = image.path.toString();
-    });
+    // setState(() {
+    //   image25 = File(image.path);
+    //   imagepath = image.path.toString();
+    // });
   }
 
-  void addphoto(ctxr) {
+  void addphoto(BuildContext context) {
     showDialog(
-      context: ctxr,
-      builder: (ctxr) {
+      context: context,
+      builder: (ctx) {
         return AlertDialog(
           content: const Text('Choose Image From.......'),
           actions: [
@@ -250,3 +272,5 @@ class _AddStudentState extends State<AddStudent> {
     );
   }
 }
+
+

@@ -1,25 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_10/controller/db_functions.dart';
-import 'package:sqflite_10/screen/homescreen.dart';
+import 'package:provider/provider.dart';
+import 'package:sqflite_10/controller/controller.dart';
+import 'package:sqflite_10/controller/controller_db.dart';
+import 'package:sqflite_10/provider/home_screen.dart';
+import 'package:sqflite_10/screen/home_screen/homescreen.dart';
+import 'package:sqflite_10/screen/searchscreen.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initializeDatabase();
-  runApp(const MyApp());
+
+  final databaseProvider = DatabaseProvider();
+  await databaseProvider.initializeDatabase();
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<DatabaseProvider>.value(value: databaseProvider),
+        ChangeNotifierProvider<HomeScreenProvider>(
+          create: (context) => HomeScreenProvider(),
+        ),
+        ChangeNotifierProvider<SearchProvider>(create: (context)=> SearchProvider())
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Students App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 0, 0, 0)),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 89, 55, 32),
+        ),
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomeScreeen(),
+      home: HomeScreeen(),
     );
   }
 }

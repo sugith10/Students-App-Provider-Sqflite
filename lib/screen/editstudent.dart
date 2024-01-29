@@ -2,8 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sqflite_10/controller/db_functions.dart';
-import 'package:sqflite_10/model/db_model.dart';
+import 'package:sqflite_10/model/model_db.dart';
 
 class EditStudent extends StatefulWidget {
   final student;
@@ -70,7 +69,7 @@ class _EditStudentState extends State<EditStudent> {
                   Row(
                     children: [
                       const Icon(Icons.abc_outlined),
-                      SizedBox(
+                      const SizedBox(
                           width: 10), // Add spacing between icon and text field
                       Expanded(
                         child: TextFormField(
@@ -98,7 +97,7 @@ class _EditStudentState extends State<EditStudent> {
                   Row(
                     children: [
                       const Icon(Icons.class_outlined),
-                      SizedBox(
+                      const SizedBox(
                           width: 10), // Add spacing between icon and text field
                       Expanded(
                         child: TextFormField(
@@ -126,7 +125,7 @@ class _EditStudentState extends State<EditStudent> {
                   Row(
                     children: [
                       const Icon(Icons.person),
-                      SizedBox(
+                      const SizedBox(
                           width: 10), // Add spacing between icon and text field
                       Expanded(
                         child: TextFormField(
@@ -154,7 +153,7 @@ class _EditStudentState extends State<EditStudent> {
                   Row(
                     children: [
                       const Icon(Icons.phone_sharp),
-                      SizedBox(
+                      const SizedBox(
                           width: 10), // Add spacing between icon and text field
                       Expanded(
                         child: TextFormField(
@@ -227,17 +226,17 @@ class _EditStudentState extends State<EditStudent> {
         imagex: updatedImagepath ?? student.imagex,
       );
 
-      await editStudent(
-        student.id!,
-        updatedStudent.name,
-        updatedStudent.classname,
-        updatedStudent.father,
-        updatedStudent.pnumber,
-        updatedStudent.imagex,
-      );
+      // await editStudent(
+      //   student.id!,
+      //   updatedStudent.name,
+      //   updatedStudent.classname,
+      //   updatedStudent.father,
+      //   updatedStudent.pnumber,
+      //   updatedStudent.imagex,
+      // );
 
       // Refresh the data in the StudentList widget.
-      getstudentdata();
+      // getstudentdata();
 
       Navigator.of(context).pop();
     }
@@ -254,7 +253,7 @@ class _EditStudentState extends State<EditStudent> {
               children: [
                 Row(
                   children: [
-                    Text('Choose from camera'),
+                    const Text('Choose from camera'),
                     IconButton(
                       onPressed: () {
                         geterimage(ImageSource.camera);
@@ -268,7 +267,7 @@ class _EditStudentState extends State<EditStudent> {
                 ),
                 Row(
                   children: [
-                    Text('Choose from gallery '),
+                    const Text('Choose from gallery '),
                     IconButton(
                       onPressed: () {
                         geterimage(ImageSource.gallery);
