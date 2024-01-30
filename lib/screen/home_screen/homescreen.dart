@@ -18,6 +18,7 @@ class HomeScreeen extends StatelessWidget {
     // var homeScreenProvider = Provider.of<HomeScreenProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Students Record',
           style: TextStyle(

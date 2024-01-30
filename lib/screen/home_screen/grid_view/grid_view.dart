@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite_10/controller/controller.dart';
-import 'package:sqflite_10/screen/studentdetails.dart';
+import 'package:sqflite_10/screen/student_details/studentdetails.dart';
 
 
 class StudentListGridView extends StatelessWidget {
@@ -19,7 +19,7 @@ class StudentListGridView extends StatelessWidget {
           padding: const EdgeInsets.only(left: 10, right: 10),
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Set the number of columns you want
+              crossAxisCount: 2,
               crossAxisSpacing: 5,
               mainAxisSpacing: 5,
             ),
@@ -59,7 +59,7 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      // color:  Color.fromARGB(255, 225, 219, 215),
+      color:  const Color(0xFFFFFBF5),
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -83,7 +83,7 @@ class CustomCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),

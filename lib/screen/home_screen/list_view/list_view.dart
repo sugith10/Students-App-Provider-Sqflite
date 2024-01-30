@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite_10/controller/controller.dart';
 import 'package:sqflite_10/model/model_db.dart';
-import 'package:sqflite_10/screen/studentdetails.dart';
+import 'package:sqflite_10/screen/student_details/studentdetails.dart';
 
 class StudentList extends StatelessWidget {
   const StudentList({super.key});

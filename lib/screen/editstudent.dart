@@ -1,22 +1,20 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:sqflite_10/controller/controller.dart';
 import 'package:sqflite_10/model/model_db.dart';
+import 'package:sqflite_10/screen/home_screen/homescreen.dart';
+import 'package:sqflite_10/screen/student_details/studentdetails.dart';
 
-class EditStudent extends StatefulWidget {
-  final student;
+class EditStudent extends StatelessWidget {
+  final StudentModel student;
 
-  const EditStudent({super.key, required this.student});
+  EditStudent({super.key,  required this.student});
 
-  @override
-  State<EditStudent> createState() => _EditStudentState();
-}
-
-class _EditStudentState extends State<EditStudent> {
   String? updatedImagepath;
 
-  final _formKey = GlobalKey<FormState>(); //  form key for the validation
+  final _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
   final _classController = TextEditingController();
@@ -25,16 +23,27 @@ class _EditStudentState extends State<EditStudent> {
 
   @override
   Widget build(BuildContext context) {
+
+       final databaseProvider = Provider.of<DatabaseProvider>(context);
+
+    _nameController.text = student.name;
+    _classController.text = student.classname;
+    _guardianController.text = student.father;
+    _mobileController.text = student.pnumber;
+    updatedImagepath = student.imagex;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Student'),
         actions: [
           IconButton(
             onPressed: () {
-              editstudentclicked(
+              editStudentClicked(
                 context,
-                widget.student,
+                student,
+                databaseProvider
               );
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreeen()));
             },
             icon: const Icon(Icons.cloud_upload),
           )
@@ -43,57 +52,53 @@ class _EditStudentState extends State<EditStudent> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Form(
-              key: _formKey, // Assign the form key
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Stack(
-                    children: [
-                      InkWell(
-                        onTap: () => editphoto(context),
-                        child: CircleAvatar(
-                          backgroundImage: updatedImagepath != null
-                              ? FileImage(File(updatedImagepath!))
-                              : FileImage(File(widget.student.imagex)),
-                          radius: 80,
-                        ),
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Stack(
+                  children: [
+                    InkWell(
+                      onTap: () => editPhoto(context),
+                      child: CircleAvatar(
+                        backgroundImage: updatedImagepath != null
+                            ? FileImage(File(updatedImagepath!))
+                            : FileImage(File(student.imagex)),
+                        radius: 80,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
-
-                  // Name input field with validation
-                  Row(
-                    children: [
-                      const Icon(Icons.abc_outlined),
-                      const SizedBox(
-                          width: 10), // Add spacing between icon and text field
-                      Expanded(
-                        child: TextFormField(
-                          keyboardType: TextInputType.name,
-                          controller: _nameController,
-                          decoration: InputDecoration(
-                            labelText: "Name",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  children: [
+                    const Icon(Icons.abc_outlined),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: TextFormField(
+                        keyboardType: TextInputType.name,
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                          labelText: "Name",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter a Name';
-                            }
-                            return null;
-                          },
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter a Name';
+                          }
+                          return null;
+                        },
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Class input field with validation
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                 // Class input field with validation
                   Row(
                     children: [
                       const Icon(Icons.class_outlined),
@@ -177,40 +182,23 @@ class _EditStudentState extends State<EditStudent> {
                       ),
                     ],
                   ),
-                ],
-              ),
-            )),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _nameController.text = widget.student.name;
-    _classController.text = widget.student.classname;
-    _guardianController.text = widget.student.father;
-    _mobileController.text = widget.student.pnumber;
-    updatedImagepath = widget.student.imagex;
-  }
-
-  @override
-  void didUpdateWidget(covariant oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  Future<void> geterimage(ImageSource source) async {
+  Future<void> getImage(ImageSource source) async {
     final image = await ImagePicker().pickImage(source: source);
     if (image == null) {
       return;
     }
-    setState(() {
-      updatedImagepath = image.path.toString();
-    });
+    updatedImagepath = image.path.toString();
   }
 
-  Future<void> editstudentclicked(
-      BuildContext context, StudentModel student) async {
+  Future<void> editStudentClicked(BuildContext context, StudentModel student,  DatabaseProvider databaseProvider) async {
     if (_formKey.currentState!.validate()) {
       final name = _nameController.text.toUpperCase();
       final classA = _classController.text.toString().trim();
@@ -226,28 +214,24 @@ class _EditStudentState extends State<EditStudent> {
         imagex: updatedImagepath ?? student.imagex,
       );
 
-      // await editStudent(
-      //   student.id!,
-      //   updatedStudent.name,
-      //   updatedStudent.classname,
-      //   updatedStudent.father,
-      //   updatedStudent.pnumber,
-      //   updatedStudent.imagex,
-      // );
-
-      // Refresh the data in the StudentList widget.
-      // getstudentdata();
-
-      Navigator.of(context).pop();
+      // Assuming you have a function to edit student in your DatabaseProvider class
+      await databaseProvider.editStudent(
+        updatedStudent.id!,
+        updatedStudent.name,
+        updatedStudent.classname,
+        updatedStudent.father,
+        updatedStudent.pnumber,
+        updatedStudent.imagex,
+      );
     }
   }
 
-  void editphoto(ctxr) {
+  void editPhoto(BuildContext context) {
     showDialog(
-      context: ctxr,
-      builder: (ctxr) {
+      context: context,
+      builder: (context) {
         return AlertDialog(
-          title: const Text('Update Photo '),
+          title: const Text('Update Photo'),
           actions: [
             Column(
               children: [
@@ -256,7 +240,7 @@ class _EditStudentState extends State<EditStudent> {
                     const Text('Choose from camera'),
                     IconButton(
                       onPressed: () {
-                        geterimage(ImageSource.camera);
+                        getImage(ImageSource.camera);
                         Navigator.of(context).pop();
                       },
                       icon: const Icon(
@@ -270,7 +254,7 @@ class _EditStudentState extends State<EditStudent> {
                     const Text('Choose from gallery '),
                     IconButton(
                       onPressed: () {
-                        geterimage(ImageSource.gallery);
+                        getImage(ImageSource.gallery);
                         Navigator.of(context).pop();
                       },
                       icon: const Icon(
