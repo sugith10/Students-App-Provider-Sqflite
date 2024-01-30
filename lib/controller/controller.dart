@@ -1,12 +1,12 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_10/model/model_db.dart';
+import 'package:studnets_app/model/model_db.dart';
+
 
 class DatabaseProvider extends ChangeNotifier {
   late Database _db;
-  List<StudentModel> _studentList = [];
+  final List<StudentModel> _studentList = [];
 
   DatabaseProvider() {
     initializeDatabase();

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite_10/controller/controller.dart';
-import 'package:sqflite_10/model/model_db.dart';
-import 'package:sqflite_10/screen/home_screen/list_view/list_view.dart';
-import 'package:sqflite_10/screen/student_details/studentdetails.dart';
+import 'package:studnets_app/controller/controller.dart';
+import 'package:studnets_app/model/model_db.dart';
+import 'package:studnets_app/screen/home_screen/list_view/list_view.dart';
+import 'package:studnets_app/screen/student_details/studentdetails.dart';
+
 
 class SearchProvider extends ChangeNotifier {
   List<StudentModel> _findUserList = [];
@@ -22,7 +23,7 @@ class SearchProvider extends ChangeNotifier {
 
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({Key? key});
+  const SearchScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

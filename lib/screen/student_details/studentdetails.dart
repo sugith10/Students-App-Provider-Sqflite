@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite_10/controller/controller.dart';
-import 'package:sqflite_10/model/model_db.dart';
-import 'package:sqflite_10/screen/editstudent.dart';
+import 'package:studnets_app/controller/controller.dart';
+import 'package:studnets_app/model/model_db.dart';
+import 'package:studnets_app/screen/edit_screen/editstudent.dart';
+
 
 class StudentDetails extends StatelessWidget {
   final StudentModel stdetails;
@@ -33,7 +34,7 @@ class StudentDetails extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               width: double.infinity,
               height: 400,
               child: Image.file(
@@ -70,11 +71,11 @@ class StudentDetails extends StatelessWidget {
 
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
-        backgroundColor:  Color.fromARGB(255, 89, 55, 32),
+        backgroundColor:  const Color.fromARGB(255, 89, 55, 32),
         onPressed: (){
         
         Navigator.push(context, MaterialPageRoute(builder: (context) => EditStudent(student: stdetails,)));
-      }, child: Icon(Icons.edit, color:  Colors.white,),),
+      }, child: const Icon(Icons.edit, color:  Colors.white,),),
     );
   }
 

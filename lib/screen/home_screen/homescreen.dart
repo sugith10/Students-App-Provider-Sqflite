@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite_10/provider/home_screen.dart';
-import 'package:sqflite_10/screen/addstudent.dart';
-import 'package:sqflite_10/screen/home_screen/grid_view/grid_view.dart';
-import 'package:sqflite_10/screen/home_screen/list_view/list_view.dart';
-import 'package:sqflite_10/screen/searchscreen.dart';
+import 'package:studnets_app/provider/home_screen.dart';
+import 'package:studnets_app/screen/add_screen/addstudent.dart';
+import 'package:studnets_app/screen/home_screen/grid_view/grid_view.dart';
+import 'package:studnets_app/screen/home_screen/list_view/list_view.dart';
+import 'package:studnets_app/screen/search_screen/searchscreen.dart';
 
 class HomeScreeen extends StatelessWidget {
-  HomeScreeen({super.key});
+  const HomeScreeen({super.key});
 
    
-  int _selectedIndex = 0;
-  // int _viewMode = 0; // 0 for list, 1 for grid
+
 
   @override
   Widget build(BuildContext context) {
-    // var homeScreenProvider = Provider.of<HomeScreenProvider>(context);
+ 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -29,7 +28,7 @@ class HomeScreeen extends StatelessWidget {
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (ctxs) => SearchScreen()));
+                    MaterialPageRoute(builder: (ctxs) => const SearchScreen()));
               },
               icon: const Icon(Icons.search_rounded))
         ],

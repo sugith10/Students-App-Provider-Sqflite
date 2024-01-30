@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite_10/controller/controller.dart';
-import 'package:sqflite_10/screen/student_details/studentdetails.dart';
+import 'package:studnets_app/controller/controller.dart';
+import 'package:studnets_app/screen/student_details/studentdetails.dart';
 
 
 class StudentListGridView extends StatelessWidget {
@@ -68,7 +68,7 @@ class CustomCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
             child: Image.file(
               File(imageUrl),
               height: 100,
@@ -89,10 +89,10 @@ class CustomCard extends StatelessWidget {
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: 4),
+                const SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     color: Colors.grey,
                   ),

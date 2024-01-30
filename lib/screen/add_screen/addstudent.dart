@@ -2,9 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite_10/controller/controller.dart';
-import 'package:sqflite_10/model/model_db.dart';
-import 'package:sqflite_10/screen/home_screen/list_view/list_view.dart';
+import 'package:studnets_app/controller/controller.dart';
+import 'package:studnets_app/model/model_db.dart';
 
 
 class AddStudent extends StatelessWidget {
@@ -166,9 +165,9 @@ class AddStudent extends StatelessWidget {
                    backgroundColor: Colors.white
                    ,
                    elevation: 2,
-                   fixedSize: Size(200, 50)
+                   fixedSize: const Size(200, 50)
                   ),
-                  child: Text(
+                  child: const Text(
                     'Add Student',
                     style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
                   ),

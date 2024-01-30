@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite_10/controller/controller.dart';
-import 'package:sqflite_10/model/model_db.dart';
-import 'package:sqflite_10/screen/student_details/studentdetails.dart';
+import 'package:studnets_app/controller/controller.dart';
+import 'package:studnets_app/model/model_db.dart';
+import 'package:studnets_app/screen/student_details/studentdetails.dart';
 
 class StudentList extends StatelessWidget {
   const StudentList({super.key});
@@ -81,7 +81,7 @@ class CustomListTile extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        color: Color.fromRGBO(247, 241, 239, 0.994),
+        color: const Color.fromRGBO(247, 241, 239, 0.994),
         child: ListTile(
           contentPadding: EdgeInsets.zero,
           title: Text(
@@ -94,14 +94,14 @@ class CustomListTile extends StatelessWidget {
           ),
           subtitle: Text(
             subtitle,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
-              color: const Color.fromARGB(255, 70, 70, 70),
+              color: Color.fromARGB(255, 70, 70, 70),
             ),
           ),
           leading: Padding(
             padding: const EdgeInsets.only(left: 10),
-            child: Container(
+            child: SizedBox(
               width: 100, 
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),

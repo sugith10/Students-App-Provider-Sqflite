@@ -2,10 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite_10/controller/controller.dart';
-import 'package:sqflite_10/model/model_db.dart';
-import 'package:sqflite_10/screen/home_screen/homescreen.dart';
-import 'package:sqflite_10/screen/student_details/studentdetails.dart';
+import 'package:studnets_app/controller/controller.dart';
+import 'package:studnets_app/model/model_db.dart';
+import 'package:studnets_app/screen/home_screen/homescreen.dart';
 
 class EditStudent extends StatelessWidget {
   final StudentModel student;
@@ -43,7 +42,7 @@ class EditStudent extends StatelessWidget {
                 student,
                 databaseProvider
               );
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreeen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> const HomeScreeen()));
             },
             icon: const Icon(Icons.cloud_upload),
           )

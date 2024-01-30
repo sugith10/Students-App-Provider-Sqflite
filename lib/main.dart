@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sqflite_10/controller/controller.dart';
-import 'package:sqflite_10/provider/home_screen.dart';
-import 'package:sqflite_10/screen/home_screen/homescreen.dart';
-import 'package:sqflite_10/screen/searchscreen.dart';
+import 'package:studnets_app/controller/controller.dart';
+import 'package:studnets_app/provider/home_screen.dart';
+import 'package:studnets_app/screen/home_screen/homescreen.dart';
+import 'package:studnets_app/screen/search_screen/searchscreen.dart';
 
 
 void main() async {
@@ -19,7 +19,8 @@ void main() async {
         ChangeNotifierProvider<HomeScreenProvider>(
           create: (context) => HomeScreenProvider(),
         ),
-        ChangeNotifierProvider<SearchProvider>(create: (context)=> SearchProvider())
+        ChangeNotifierProvider<SearchProvider>(
+            create: (context) => SearchProvider())
       ],
       child: const MyApp(),
     ),
@@ -38,9 +39,10 @@ class MyApp extends StatelessWidget {
           seedColor: const Color.fromARGB(255, 89, 55, 32),
         ),
         useMaterial3: true,
+        fontFamily: 'poppins',
       ),
       debugShowCheckedModeBanner: false,
-      home: HomeScreeen(),
+      home: const HomeScreeen(),
     );
   }
 }
