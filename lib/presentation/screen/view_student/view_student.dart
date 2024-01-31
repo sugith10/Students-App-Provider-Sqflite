@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studnets_app/controller/controller.dart';
 import 'package:studnets_app/model/model_db.dart';
-import 'package:studnets_app/screen/edit_screen/editstudent.dart';
+import 'package:studnets_app/presentation/screen/edit_screen/editstudent.dart';
 
 
 class StudentDetails extends StatelessWidget {
@@ -26,47 +26,55 @@ class StudentDetails extends StatelessWidget {
             },
             icon: const Icon(
               Icons.delete,
-              color: Color.fromARGB(255, 207, 45, 33),
+              color: Color.fromARGB(255, 89, 55, 32),
             ),
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SizedBox(
               width: double.infinity,
               height: 400,
-              child: Image.file(
-                File(stdetails.imagex),
-                fit: BoxFit.cover,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.file(
+                  File(stdetails.imagex),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  buildDetailRow('Name', stdetails.name),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  buildDetailRow('Class', stdetails.classname),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  buildDetailRow('Parent', stdetails.father),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  buildDetailRow('Mobile', stdetails.pnumber),
-                ],
-              ),
+          ),
+         
+          Padding(
+            padding: const EdgeInsets.only(left: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 25,
+                ),
+                buildDetailRow('Name', stdetails.name),
+                const SizedBox(
+                  height: 25,
+                ),
+                buildDetailRow('Class', stdetails.classname),
+                const SizedBox(
+                  height: 25,
+                ),
+                buildDetailRow('Parent', stdetails.father),
+                const SizedBox(
+                  height: 25,
+                ),
+                buildDetailRow('Mobile', stdetails.pnumber),
+              ],
             ),
-          ],
-        ),
+          ),
+          const Spacer(),
+        ],
       ),
 
       floatingActionButton: FloatingActionButton(
@@ -81,8 +89,6 @@ class StudentDetails extends StatelessWidget {
 
   Widget buildDetailRow(String title, String value) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           '$title :',

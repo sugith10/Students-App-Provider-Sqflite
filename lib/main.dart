@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studnets_app/controller/controller.dart';
 import 'package:studnets_app/provider/home_screen.dart';
-import 'package:studnets_app/screen/home_screen/homescreen.dart';
-import 'package:studnets_app/screen/search_screen/searchscreen.dart';
+import 'package:studnets_app/presentation/screen/search_screen/searchscreen.dart';
+import 'package:studnets_app/presentation/screen/splash_page/splash_page.dart';
 
 
 void main() async {
@@ -35,14 +35,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Students App',
       theme: ThemeData(
+
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 89, 55, 32),
+          seedColor: const Color.fromARGB(255, 255, 255, 255),
         ),
         useMaterial3: true,
         fontFamily: 'poppins',
       ),
       debugShowCheckedModeBanner: false,
-      home: const HomeScreeen(),
+      home: const SplashPage(),
     );
   }
 }

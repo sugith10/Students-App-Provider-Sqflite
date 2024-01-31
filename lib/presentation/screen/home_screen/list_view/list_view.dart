@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studnets_app/controller/controller.dart';
 import 'package:studnets_app/model/model_db.dart';
-import 'package:studnets_app/screen/student_details/studentdetails.dart';
+import 'package:studnets_app/presentation/screen/view_student/view_student.dart';
 
 class StudentList extends StatelessWidget {
   const StudentList({super.key});

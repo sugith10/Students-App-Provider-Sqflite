@@ -19,7 +19,11 @@ dependencies:
   image_picker: ^1.0.4
   sqflite: ^2.3.0
   provider: ^6.1.1
-  
+  page_transition: ^2.1.0
+  curved_navigation_bar: ^1.0.3
+  google_nav_bar: ^5.0.6
+  line_icons: ^2.0.3
+  animate_do: ^3.3.2
 
 dev_dependencies:
   flutter_test:
@@ -36,12 +40,13 @@ flutter:
 
   assets:
     - assets/profile.png
+    - assets/img/students_app_splash_scrn_image.png
 
-  fonts:
-      - family: poppins
-        fonts:
-          - asset: asset/font/popins/Poppins-Medium.ttf
-          - asset: asset/font/popins/Poppins-Regular.ttf
+  # fonts:
+  #     - family: poppins
+  #       fonts:
+  #         - asset: asset/font/popins/Poppins-Medium.ttf
+  #         - asset: asset/font/popins/Poppins-Regular.ttf
 
   
   # For details regarding fonts from package dependencies,

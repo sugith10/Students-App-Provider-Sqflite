@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:studnets_app/controller/controller.dart';
 import 'package:studnets_app/model/model_db.dart';
-import 'package:studnets_app/screen/home_screen/homescreen.dart';
+import 'package:studnets_app/presentation/screen/home_screen/homescreen.dart';
 
 class EditStudent extends StatelessWidget {
   final StudentModel student;
