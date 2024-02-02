@@ -1,9 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:studnets_app/controller/controller.dart';
 import 'package:studnets_app/model/model_db.dart';
+import 'package:studnets_app/provider/add_screen.dart';
 
 class AddStudent extends StatelessWidget {
   AddStudent({super.key});
@@ -22,12 +25,6 @@ class AddStudent extends StatelessWidget {
     final databaseProvider = Provider.of<DatabaseProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   backgroundColor: Color.fromARGB(0, 255, 255, 255),
-      //   automaticallyImplyLeading: false,
-      //   // title: const Text('Add Student'),
-      //   centerTitle: true,
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -42,36 +39,56 @@ class AddStudent extends StatelessWidget {
                     height: 10,
                   ),
                   Align(
-                      alignment: AlignmentDirectional.bottomStart,
-                      child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back_rounded,
-                            size: 40,
-                            color: Color.fromARGB(255, 43, 43, 43),
-                          ))),
+                    alignment: AlignmentDirectional.bottomStart,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon:const Icon(
+                        Icons.arrow_back_rounded,
+                        size: 38,
+                        color: Color.fromARGB(255, 43, 43, 43),
+                      ) ,
+                    ),
+                  ),
                   const SizedBox(
                     height: 30,
                   ),
                   InkWell(
-                    customBorder: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    onTap: () {
-                      print('he;;');
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 2),
-                          borderRadius: BorderRadius.circular(50)),
-                      child: const Icon(
-                        Icons.person_outline_rounded,
-                        size: 150,
-                      ),
-                    ),
-                  ),
+  customBorder: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(50),
+  ),
+  onTap: () {
+    addphoto(context);
+  },
+  child: Container(
+    decoration: BoxDecoration(
+      border: Border.all(color: Colors.black, width: 2),
+      borderRadius: BorderRadius.circular(50),
+    ),
+    child: Consumer<AddPageProvider>(
+      builder: (context, addScreen, child) {
+        if (addScreen.image != null) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(48),
+            child: Image.file(
+              addScreen.image!,
+            height: 150,
+            width: 150,
+              fit: BoxFit.cover, 
+            ),
+          );
+        } else {
+          return const Icon(
+            Icons.person_outline_rounded,
+            size: 150,
+          );
+        }
+      },
+    ),
+  ),
+),
+
 
                   const SizedBox(height: 50),
 
@@ -160,16 +177,26 @@ class AddStudent extends StatelessWidget {
 
                   OutlinedButton(
                     style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all<Size>(
-                          const Size(double.infinity, 55)),
-                    ),
+                        minimumSize: MaterialStateProperty.all<Size>(
+                            const Size(double.infinity, 55)),
+                        elevation: const MaterialStatePropertyAll(5),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    side: const BorderSide(
+                                      color: Color.fromARGB(255, 89, 55, 32),
+                                      width: 50,
+                                    )))),
                     onPressed: () {
                       addstudentclicked(context, databaseProvider);
                     },
                     child: const Text(
                       'Add Student',
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 89, 55, 32),
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ],
@@ -222,46 +249,55 @@ class AddStudent extends StatelessWidget {
     }
   }
 
-  Future<void> getimage(ImageSource source) async {
-    final image = await ImagePicker().pickImage(source: source);
-    if (image == null) {
-      return;
-    }
-
-    image25 = File(image.path);
-    imagepath = image.path.toString();
-    // setState(() {
-    //   image25 = File(image.path);
-    //   imagepath = image.path.toString();
-    // });
+ Future<void> getimage(ImageSource source, BuildContext context) async {
+  final image = await ImagePicker().pickImage(source: source);
+  if (image == null) {
+    return;
   }
+
+  Provider.of<AddPageProvider>(context, listen: false)
+      .setImage(File(image.path), image.path.toString());
+}
+
 
   void addphoto(BuildContext context) {
     showDialog(
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          content: const Text('Choose Image From.......'),
+          content: const Text(
+            'Choose image from...',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          ),
           actions: [
-            IconButton(
-              onPressed: () {
-                getimage(ImageSource.camera);
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(
-                Icons.camera_alt_rounded,
-                color: Colors.red,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                getimage(ImageSource.gallery);
-                Navigator.of(context).pop();
-              },
-              icon: const Icon(
-                Icons.image,
-                color: Colors.red,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    getimage(ImageSource.camera,context);
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(
+                    Icons.camera_alt_rounded,
+                    size: 30,
+                    color: Color.fromARGB(255, 89, 55, 32),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    getimage(
+                      ImageSource.gallery,context
+                    );
+                    Navigator.of(context).pop();
+                  },
+                  icon: const Icon(
+                    Icons.image,
+                    size: 30,
+                    color: Color.fromARGB(255, 89, 55, 32),
+                  ),
+                ),
+              ],
             ),
           ],
         );

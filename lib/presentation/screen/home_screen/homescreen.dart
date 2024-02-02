@@ -67,6 +67,7 @@ class HomeScreeen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        
         selectedItemColor:  const Color.fromARGB(255, 89, 55, 32),
         enableFeedback: false,
         elevation: 1,

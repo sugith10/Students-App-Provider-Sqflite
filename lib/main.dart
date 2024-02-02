@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:studnets_app/controller/controller.dart';
+import 'package:studnets_app/presentation/screen/add_screen/addstudent.dart';
+import 'package:studnets_app/provider/add_screen.dart';
 import 'package:studnets_app/provider/home_screen.dart';
 import 'package:studnets_app/presentation/screen/search_screen/searchscreen.dart';
 import 'package:studnets_app/presentation/screen/splash_page/splash_page.dart';
@@ -20,7 +22,9 @@ void main() async {
           create: (context) => HomeScreenProvider(),
         ),
         ChangeNotifierProvider<SearchProvider>(
-            create: (context) => SearchProvider())
+            create: (context) => SearchProvider()),
+            ChangeNotifierProvider<AddPageProvider>(
+      create: (context) => AddPageProvider()),
       ],
       child: const MyApp(),
     ),
@@ -35,7 +39,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Students App',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 255, 255, 255),
         ),
